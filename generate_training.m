@@ -11,8 +11,9 @@ for i=1:length(imagefiles)
         k = get(fig, 'CurrentCharacter');
         if (strcmp(k,'ESC') == 0)
             break;
+        else
+            continue;
         end
-        continue;
     else
        %start by capturing positive examples
         title('Click on the birds for positive examples');
