@@ -7,9 +7,10 @@ for i=1:length(imagefiles)
     currentfile = imagefiles(i).name;
     imagesc(imread(strcat('videos/frames/',currentfile)));
     keydown = waitforbuttonpress();
-    if (keydown ~= 0)%skip the image
+    if (keydown ~= 0) %skip the image
         k = get(fig, 'CurrentCharacter');
-        if (strcmp(k,'ESC') == 0)
+        disp(k);
+        if (strcmp(k,'q') == 1)
             break;
         end
         continue;
