@@ -12,8 +12,9 @@ for i=1:length(imagefiles)
         disp(k);
         if (strcmp(k,'q') == 1)
             break;
+        else
+            continue;
         end
-        continue;
     else
        %start by capturing positive examples
         title('Click on the birds for positive examples');
