@@ -26,6 +26,7 @@ for i=1:length(training_data(:));
         box = reshape(imcrop(M1, 'single', [pos_x(j)-20 pos_y(j)-20 size size]), 1, feature_size);
         box = (box - mean(box)) ./ std(box); %rescale around 0 for numerical stability
         pos_boxes(j,:) = box;
+        max_min = rangefilt(im);
     end;
     for j=1:12;
         box = reshape(imcrop(M1, 'single', [neg_x(j)-20 neg_y(j)-20 size size]), 1, feature_size);
@@ -37,4 +38,4 @@ for i=1:length(training_data(:));
     X((i-1)*16 +1:16*i,:) = boxes;
 end;
 %fit a logistic model using glmfit
-[B] = glmfit(X, Y, 'binomial');
+%[B,dev] = glmfit(X, Y, 'binomial');
