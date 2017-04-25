@@ -32,7 +32,7 @@ for i=1:length(imagefiles)
         pause(0.5);
         training_data(data_idx) = s;
         data_idx = data_idx + 1;
-        disp(size(training_data));
+        disp(data_idx);
     end
 end
 save('training_data.mat', 'training_data');

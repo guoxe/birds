@@ -1,38 +1,40 @@
 %% Load training set and use it to train SVM
-load('training_data_final.mat');
+clear;
+clc;
+load('training_data_merged.mat');
 size = 39;
+feature_size = (size+1)^2;
 
-%x = [training_data(1).positive(1:4)];
-%y = [training_data(1).positive(5:8)];
-im = imread(strcat('videos/frames/',training_data(1).imfile));
-im = im(:,:,1);
-%figure;
-%imshow(im);
-%b = imcrop(im, 'single', [x(1)-20 y(1)-20 size size]);
-%figure;
-%imshow(b);
-
-%xb = reshape(b, 1,1600);
-X = zeros(1, (1600*1600));
-%X = [];
-y = zeros(1, 1600);
-%y = [];
-%pos_boxes = [];
+X = zeros(16*length(training_data(:)), feature_size);
+labels = zeros(16,1);
+labels(1:4) = 1;
+Y = repmat(labels, [length(training_data(:)) 1]);
 
 for i=1:length(training_data(:));
-    pos_boxes = zeros(1,6400);
+    %load the image, convert it to double and rescale it for numerical
+    %purposes
+    %add more channel
+    im = rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray');
+    [M1,O1]=gradientMag(im,0,0,0,0);
+    pos_boxes = zeros(4,feature_size);
+    neg_boxes = zeros(12,feature_size);
     pos_x = training_data(i).positive(:,1);
     pos_y = training_data(i).positive(:,2);
     neg_x = training_data(i).negative(:,1);
-    neg_y = training_data(i).negative(:,2);    
-    for  j=1:4;
-        n = ((j-1)*1600) + 1; 
-        box = reshape(imcrop(im, 'single', [pos_x(j)-20 pos_y(j)-20 size size]), 1, 1600);
-        pos_boxes(n:1600*j) = box; 
+    neg_y = training_data(i).negative(:,2);
+    for  j=1:4; 
+        box = reshape(imcrop(M1, 'single', [pos_x(j)-20 pos_y(j)-20 size size]), 1, feature_size);
+        box = (box - mean(box)) ./ std(box); %rescale around 0 for numerical stability
+        pos_boxes(j,:) = box;
     end;
     for j=1:12;
-        
+        box = reshape(imcrop(M1, 'single', [neg_x(j)-20 neg_y(j)-20 size size]), 1, feature_size);
+        box = (box - mean(box)) ./ std(box); %rescale around 0 for numerical stability
+        neg_boxes(j,:) = box;
     end;
-    X((i-1)*6400 + 1 : 6400*i) = pos_boxes;
+
+    boxes = [pos_boxes;neg_boxes];
+    X((i-1)*16 +1:16*i,:) = boxes;
 end;
-    
+%fit a logistic model using glmfit
+[B] = glmfit(X, Y, 'binomial');
