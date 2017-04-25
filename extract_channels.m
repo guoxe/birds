@@ -9,6 +9,8 @@ function x = extract_channels(im,channels,feature_size)
     [grad_mag,O] = gradientMag(im,0,0,0,0);
     grad_mag = reshape(grad_mag,1,feature_size);
     max_min = reshape(rangefilt(reshape(grayscale, 40, 40)),1,feature_size);
-    x = [grad_mag grayscale max_min];
+    entropy = reshape(entropyfilt(reshape(im2double(im), 40, 40)), 1, feature_size);
+    stdfilter = reshape(stdfilt(reshape(im2double(im), 40, 40)), 1, feature_size);
+    x = [grad_mag grayscale max_min entropy stdfilter];
 end
 

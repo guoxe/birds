@@ -80,14 +80,15 @@ B = glmfit(X, Y, 'binomial', 'link', 'logit');
 
 %% test different channels (entropy)
 load training_data_merged.mat;
-%im = rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray');
 im = imread(strcat('videos/frames/',training_data(1).imfile));
-I = im(:,:,1);
-J = entropyfilt(I);
-K = rangefilt(I);
-L = stdfilt(I);
+%im = im2double(rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray'));
+
+%I = im(:,:,1);
+J = entropyfilt(im);
+K = rangefilt(im);
+L = stdfilt(im);
 figure;
-imshow(I);
+imshow(im);
 figure;
 imshow(J, []);
 figure;

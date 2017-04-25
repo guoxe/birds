@@ -4,7 +4,7 @@ clc;
 load('training_data_merged.mat');
 size = 39;
 feature_size = (size+1)^2;
-channels = 3;
+channels = 5;
 
 X = zeros(16*length(training_data(:)), feature_size*channels);
 labels = zeros(16,1);
