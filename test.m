@@ -1,7 +1,7 @@
 %% testing some channel features;
 clear;
 clc;
-I=rgbConvert(imread('videos/frames/scene07576.jpg'),'gray');
+I=rgbConvert(imread('videos/frames/scene07576.jpg'), 'gray');
 [Gx,Gy]=gradient2(I);
 M=sqrt(Gx.^2+Gy.^2);
 O=atan2(Gy,Gx);
