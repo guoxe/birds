@@ -95,3 +95,28 @@ figure;
 imshow(K);
 figure;
 imshow(L);
+figure;
+imshow(M);
+
+%% Gradient testing
+load training_data_merged.mat;
+%im = imread(strcat('videos/frames/',training_data(1).imfile));
+im = rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray');
+
+[Gx,Gy]=gradient2(im);
+M=sqrt(Gx.^2+Gy.^2);
+O=atan2(Gy,Gx);
+full=0;
+[M1,O1]=gradientMag(im,0,0,0,full);
+D=abs(M-M1); 
+mean2(D), if(full), o=pi*2; else o=pi; end;
+D=abs(O-O1);
+D(~M)=0;
+D(D>o*.99)=o-D(D>o*.99);
+mean2(abs(D));
+H1=gradientHist(M1,O1,1,6,0);
+figure(1);
+montage2(H1);
+%H2=gradientHist(M1,O1,2,6,1);
+%figure(2);
+%montage2(H2);

@@ -2,9 +2,9 @@
 clear;
 clc;
 load('training_data_merged.mat');
-size = 39;
+size = 19;
 feature_size = (size+1)^2;
-channels = 5;
+channels = 10;
 
 X = zeros(16*length(training_data(:)), feature_size*channels);
 labels = zeros(16,1);

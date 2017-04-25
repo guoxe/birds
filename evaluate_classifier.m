@@ -2,9 +2,9 @@ clc;
 clear;
 load model_weights.mat;
 load test_data_eval.mat;
-size=39;
-channels=3;
-feature_size=1600;
+size=19;
+channels=4;
+feature_size=(size+1)^2;
 labels = zeros(16,1);
 labels(1:4)=1;
 Y = repmat(labels, [length(training_data(:)) 1]); %generate the correct class labels, 1 is bird
