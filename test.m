@@ -41,7 +41,7 @@ imshow(b);
 %%
 clear;
 clc;
-load training_data_2017_04_18.mat;
+load training_data_merged.mat;
 for i=1:size(training_data,2)
     imshow(strcat('videos/frames/',training_data(i).imfile));
     fprintf('element number: %d\n', i);
