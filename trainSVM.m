@@ -39,6 +39,7 @@ for i=1:length(training_data(:));
         neg_boxes(j,1:1600) = c1;
         neg_boxes(j,1601:3200) = c2;
     end;
+
     boxes = [pos_boxes;neg_boxes];
     X((i-1)*16 +1:16*i,:) = boxes;
 end;
