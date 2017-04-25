@@ -35,3 +35,4 @@ for i=1:length(training_data(:));
 end;
 %fit a logistic model using glmfit
 [B,dev] = glmfit(X, Y, 'binomial');
+save('model_weights.mat', 'B');
