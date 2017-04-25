@@ -76,3 +76,21 @@ c = (c-mean(c)) ./ std(c);
 X = [b c];
 Y = ones([1 2]);
 B = glmfit(X, Y, 'binomial', 'link', 'logit');
+
+
+%% test different channels (entropy)
+load training_data_merged.mat;
+%im = rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray');
+im = imread(strcat('videos/frames/',training_data(1).imfile));
+I = im(:,:,1);
+J = entropyfilt(I);
+K = rangefilt(I);
+L = stdfilt(I);
+figure;
+imshow(I);
+figure;
+imshow(J, []);
+figure;
+imshow(K);
+figure;
+imshow(L);
