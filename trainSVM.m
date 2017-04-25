@@ -30,8 +30,9 @@ for i=1:length(training_data(:));
         box = reshape(imcrop(im, 'single', [pos_x(j)-20 pos_y(j)-20 size size]), 1, 1600);
         pos_boxes(n:1600*j) = box; 
     end;
-    %for j=1:12;
-    %end;
+    for j=1:12;
+        
+    end;
     X((i-1)*6400 + 1 : 6400*i) = pos_boxes;
 end;
     
