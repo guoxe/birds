@@ -3,7 +3,7 @@ clear;
 load model_weights.mat;
 load test_data_eval.mat;
 size=19;
-channels=4;
+channels=2;
 feature_size=(size+1)^2;
 labels = zeros(16,1);
 labels(1:4)=1;

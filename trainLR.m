@@ -4,7 +4,7 @@ clc;
 load('training_data_merged.mat');
 size = 19;
 feature_size = (size+1)^2;
-channels = 10;
+channels = 2;
 
 X = zeros(16*length(training_data(:)), feature_size*channels);
 labels = zeros(16,1);
@@ -34,5 +34,10 @@ for i=1:length(training_data(:));
     X((i-1)*16 +1:16*i,:) = boxes;
 end;
 %fit a logistic model using glmfit
-[B,dev] = glmfit(X, Y, 'binomial');
+%[B,dev] = glmfit(X, Y, 'binomial');
+[B0,FitInfo] = lassoglm(X,Y,'binomial','NumLambda',50,'CV',8, 'link', 'logit', 'Alpha', 0.75);
+indx = FitInfo.Index1SE;
+B1 = B0(:,indx);
+cnst = FitInfo.Intercept(indx);
+B = [cnst;B1];
 save('model_weights.mat', 'B');
