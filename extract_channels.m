@@ -34,6 +34,6 @@ function x = extract_channels(im,channels,feature_size)
     G4 = reshape(H1(:,:,4), 1, feature_size);
     G5 = reshape(H1(:,:,5), 1, feature_size);
     G6 = reshape(H1(:,:,6), 1, feature_size);
-    x = [grad_mag grayscale max_min entropy G1 G2 G3 G4 G5 G6];
+    x = [grad_mag grayscale G1 G2 G3 G4 G5 G6];
 end
 
