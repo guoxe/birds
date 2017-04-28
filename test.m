@@ -120,3 +120,11 @@ montage2(H1);
 %H2=gradientHist(M1,O1,2,6,1);
 %figure(2);
 %montage2(H2);
+
+%% region of interest experimentation
+load training_data_merged.mat;
+im = imread(strcat('videos/frames/',training_data(1).imfile));
+    imshow(im);
+    h = imellipse;
+    position = wait(h);
+   
