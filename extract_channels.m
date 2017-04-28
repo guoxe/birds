@@ -4,9 +4,11 @@ function x = extract_channels(im,channels,feature_size)
 %   Extract various channel features from the image, such as:
 %   gradient magnitude, gradients in different directions, min-max filter,
 %   grayscale
+
     size = sqrt(feature_size);
     grayscale = reshape(im, 1, feature_size);
     grayscale = (grayscale-mean(grayscale)) ./ std(grayscale);%perform normalization
+    
     [grad_mag,O] = gradientMag(im,0,0,0,0);
     grad_mag = reshape(grad_mag,1,feature_size);
     %max_min = reshape(rangefilt(reshape(grayscale, size, size)),1,feature_size);

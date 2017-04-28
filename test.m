@@ -120,3 +120,34 @@ montage2(H1);
 %H2=gradientHist(M1,O1,2,6,1);
 %figure(2);
 %montage2(H2);
+
+
+%% testing ROI
+load training_data_merged.mat;
+im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
+figure;
+h_im = imshow(im);
+
+h1 = imellipse;
+mask1 = createMask(h1,h_im);
+h2 = imellipse;
+mask2 = createMask(h2,h_im);
+h3 = imellipse;
+mask3 = createMask(h3,h_im);
+h4 = imellipse;
+mask4 = createMask(h4,h_im);
+
+new_im1 = bsxfun(@times, im, mask1);
+new_im2 = bsxfun(@times, im, mask2);
+new_im3 = bsxfun(@times, im, mask3);
+new_im4 = bsxfun(@times, im, mask4);
+
+
+figure;
+imshow(new_im1);
+figure;
+imshow(new_im2);
+figure;
+imshow(new_im3);
+figure;
+imshow(new_im4);
