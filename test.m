@@ -80,8 +80,8 @@ B = glmfit(X, Y, 'binomial', 'link', 'logit');
 
 %% test different channels (entropy)
 load training_data_merged.mat;
-im = imread(strcat('videos/frames/',training_data(1).imfile));
-%im = im2double(rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray'));
+%im = imread(strcat('videos/frames/',training_data(1).imfile));
+im = im2double(rgbConvert(imread(strcat('videos/frames/',training_data(i).imfile)),'gray'));
 
 %I = im(:,:,1);
 J = entropyfilt(im);
@@ -121,10 +121,39 @@ montage2(H1);
 %figure(2);
 %montage2(H2);
 
-%% region of interest experimentation
+
+%% testing ROI
+clear;
+clc;
 load training_data_merged.mat;
-im = imread(strcat('videos/frames/',training_data(1).imfile));
-    imshow(im);
-    h = imellipse;
-    position = wait(h);
-   
+im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
+figure;
+h_im = imshow(im);
+
+h1 = imellipse;
+wait(h1);
+mask1 = createMask(h1,h_im);
+h2 = imellipse;
+wait(h2);
+mask2 = createMask(h2,h_im);
+h3 = imellipse;
+wait(h3)
+mask3 = createMask(h3,h_im);
+h4 = imellipse;
+wait(h4);
+mask4 = createMask(h4,h_im);
+
+new_im1 = bsxfun(@times, im, mask1);
+new_im2 = bsxfun(@times, im, mask2);
+new_im3 = bsxfun(@times, im, mask3);
+new_im4 = bsxfun(@times, im, mask4);
+
+
+figure;
+imshow(new_im1);
+figure;
+imshow(new_im2);
+figure;
+imshow(new_im3);
+figure;
+imshow(new_im4);

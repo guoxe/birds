@@ -27,7 +27,7 @@ for i=1:length(training_data(:));
     for j=1:12;
         I = imcrop(im,'single', [neg_x(j)-20 neg_y(j)-20 size size]);
         x=extract_channels(I,channels,feature_size);
-        neg_boxes(j,:) = x;
+        neg_boxes(j,:) = x; 
     end;
 
     boxes = [pos_boxes;neg_boxes];
