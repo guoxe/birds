@@ -7,8 +7,8 @@ load mask2.mat;
 load mask3.mat;
 load mask4.mat;
 %load mask_t.mat;
-load model_weights_30x30.mat;%load the model weights
-sz=29;
+load model_weights_20x20_8.mat;%load the model weights
+sz=19;
 
 imagefiles = dir('videos/frames/*.jpg');%generate a list of all the image files
 for i=1:1%loop through all the imagefiles

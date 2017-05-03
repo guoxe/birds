@@ -12,7 +12,7 @@ function [ hm ] = generate_heatmap(B,img,mask,sz)
         %I = imcrop(img,'single', [i-(sz+1) j-(sz+1) sz sz]);
         offset = (sz+1)/2;
         patch = img(i-offset:i+offset-1,j-offset:j+offset-1);
-        x=extract_channels(patch,2,features);
+        x=extract_channels(patch,8,features);
         hm(i,j) = glmval(B,x,'logit');
     end
 end

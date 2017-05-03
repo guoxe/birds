@@ -159,6 +159,8 @@ figure;
 imshow(new_im4);
 
 %% gabor testing
+clear;
+clc;
 load training_data_merged.mat;
 offset = 20;
 im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');

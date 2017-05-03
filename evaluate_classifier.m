@@ -1,9 +1,9 @@
 clc;
 clear;
-load model_weights_30x30.mat;
+load model_weights_20x20_8.mat;
 load test_data_eval.mat;
-size=29;
-channels=2;
+size=19;
+channels=8;
 feature_size=(size+1)^2;
 labels = zeros(16,1);
 labels(1:4)=1;
