@@ -7,8 +7,8 @@ load mask2.mat;
 load mask3.mat;
 load mask4.mat;
 %load mask_t.mat;
-load model_weights_20x20.mat;%load the model weights
-sz=19;
+load model_weights_30x30.mat;%load the model weights
+sz=29;
 
 imagefiles = dir('videos/frames/*.jpg');%generate a list of all the image files
 for i=1:1%loop through all the imagefiles
@@ -20,10 +20,10 @@ for i=1:1%loop through all the imagefiles
     m4=generate_heatmap(B,im,mask4,sz);%heatmap for the fourth cage
     %find the peaks, after doing a crude noise filter (remove values <
     %0.5)
-    m1 = bsxfun(@times, m1, bsxfun(@ge, m1, 0.5));
-    m2 = bsxfun(@times, m2, bsxfun(@ge, m2, 0.5));
-    m3 = bsxfun(@times, m3, bsxfun(@ge, m3, 0.5));
-    m4 = bsxfun(@times, m4, bsxfun(@ge, m4, 0.5));
+    m1 = bsxfun(@times, m1, bsxfun(@ge, m1, 0.85));
+    m2 = bsxfun(@times, m2, bsxfun(@ge, m2, 0.85));
+    m3 = bsxfun(@times, m3, bsxfun(@ge, m3, 0.85));
+    m4 = bsxfun(@times, m4, bsxfun(@ge, m4, 0.85));
     p1 = FastPeakFind(m1);
     p2 = FastPeakFind(m2);
     p3 = FastPeakFind(m3);

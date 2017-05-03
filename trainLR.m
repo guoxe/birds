@@ -2,7 +2,7 @@
 clear;
 clc;
 load('training_data_merged.mat');
-size = 29;
+size = 39;
 feature_size = (size+1)^2;
 channels = 2;
 offset = (size+1)/2;
@@ -45,4 +45,4 @@ indx = FitInfo.Index1SE;
 B1 = B0(:,indx);
 cnst = FitInfo.Intercept(indx);
 B = [cnst;B1];
-save('model_weights_30x30.mat', 'B');
+save('model_weights_40x40.mat', 'B');

@@ -7,7 +7,6 @@ function x = extract_channels(im,channels,feature_size)
 
     size = sqrt(feature_size);
     grayscale = reshape(im, 1, feature_size);
-    grayscale = (grayscale-mean(grayscale)) ./ std(grayscale);%perform normalization
     
     [grad_mag,O] = gradientMag(im,0,0,0,0);
     grad_mag = reshape(grad_mag,1,feature_size);
