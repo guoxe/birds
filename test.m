@@ -160,23 +160,17 @@ imshow(new_im4);
 
 %%
 load training_data_merged.mat;
+offset = 20;
 im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
-pos_x = training_data(i).positive(:,1);
-pos_y = training_data(i).positive(:,2);
-neg_x = training_data(i).negative(:,1);
-neg_y = training_data(i).negative(:,2);
-for j=1:4;
-    I = imcrop(im,'single', [pos_x(j)-20 pos_y(j)-20 size size]);
-    x=extract_channels(I,channels,feature_size);
-    pos_boxes(j,:) = x;
-end;
-for j=1:12;
-    I = imcrop(im,'single', [neg_x(j)-20 neg_y(j)-20 size size]);
-    x=extract_channels(I,channels,feature_size);
-    neg_boxes(j,:) = x; 
-end;
+pos_x = training_data(1).positive(:,1);
+pos_y = training_data(1).positive(:,2);
+neg_x = training_data(1).negative(:,1);
+neg_y = training_data(1).negative(:,2);
+patch = im(pos_y(1)-offset:pos_y(1)+offset-1,pos_x(1)-offset:pos_x(1)+offset-1);
+%x=extract_channels(patch,channels,feature_size);
 
-wavelength = 20;
+
+wavelength = 2;
 orientation = [0 30 60 90 120 150];
 g = gabor(wavelength, orientation);
 
@@ -185,4 +179,6 @@ outMag = imgaborfilt(im,g);
 outSize = size(outMag);
 outMag = reshape(outMag, [outSize(1:2), 1, outSize(3)]);
 figure, montage(outMag, 'DisplayRange', []);
+figure;
+imshow(patch);
 
