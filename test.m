@@ -158,7 +158,7 @@ imshow(new_im3);
 figure;
 imshow(new_im4);
 
-%%
+%% gabor testing
 load training_data_merged.mat;
 offset = 20;
 im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
@@ -171,14 +171,11 @@ patch = im(pos_y(1)-offset:pos_y(1)+offset-1,pos_x(1)-offset:pos_x(1)+offset-1);
 
 
 wavelength = 2;
-orientation = [0 30 60 90 120 150];
+orientation = [0 45 90 135];
 g = gabor(wavelength, orientation);
 
-outMag = imgaborfilt(im,g);
+outMag = imgaborfilt(patch,g);
 
 outSize = size(outMag);
 outMag = reshape(outMag, [outSize(1:2), 1, outSize(3)]);
-figure, montage(outMag, 'DisplayRange', []);
-figure;
-imshow(patch);
-
+% figure, montage(outMag, 'DisplayRange', []);
