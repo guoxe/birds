@@ -1,16 +1,19 @@
-function [ hm ] = generate_heatmap(B,img)
+function [ hm ] = generate_heatmap(B,img,mask,sz)
 %GENERATE_HEATMAP Generate a heatmap of classifier responses for the given
 %image mask
 %   Given an input image this function will return a heatmap of values
 %   between [0,1] corresponding to the classifier responses for each pixel
 %   of the input image.
-    idx = find(img ~= 0);
-    hm = zeros(size(img));
+    features = (sz+1)^2;
+    idx = find(mask ~= 0);
+    hm = zeros(size(mask));
     for k=1:length(idx)
-        [j,i] = ind2sub(size(img), idx(k));
-        I = imcrop(img,'single', [i-20 j-20 19 19]);
-        x=extract_channels(I,2,400);%add proper feature sizes + channels?
-        hm(j,i) = glmval(B,x,'logit');
+        [i,j] = ind2sub(size(mask), idx(k));
+        %I = imcrop(img,'single', [i-(sz+1) j-(sz+1) sz sz]);
+        offset = (sz+1)/2;
+        patch = img(i-offset:i+offset-1,j-offset:j+offset-1);
+        x=extract_channels(patch,2,features);
+        hm(i,j) = glmval(B,x,'logit');
     end
 end
 
