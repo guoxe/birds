@@ -29,14 +29,14 @@ for i=1:length(training_data(:));
     end;
     predictions((i-1)*16 +1:16*i,1) = [pos neg];
 end
-Yhat = round([predictions(:).y]');
-wrong_predictions = length(find(Y-Yhat ~= 0));
+Yhat = [predictions(:).y]';
+wrong_predictions = length(find(abs(Y-Yhat) >= 0.3));
 fprintf('Accuracy: %f\n', (length(Y)-wrong_predictions)/length(Y));
 
 %% print images that were misclassified
 for i=1:length(predictions(:))
-    yhat = round(predictions(i).y);
-    if (yhat == Y(i))
+    yhat = predictions(i).y;
+    if (abs(yhat - Y(i)) >= 0.3)
         continue;
     end
     imshow(predictions(i).image);

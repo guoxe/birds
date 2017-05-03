@@ -35,7 +35,9 @@ for i=1:length(training_data(:));
 end;
 %fit a logistic model using glmfit
 %[B,dev] = glmfit(X, Y, 'binomial');
-[B0,FitInfo] = lassoglm(X,Y,'binomial','NumLambda',150,'CV',15, 'link', 'logit', 'Alpha', 0.35);
+%[B0,FitInfo] = lassoglm(X,Y,'binomial','NumLambda',250,'CV',15, 'link', 'logit', 'Alpha', 0.35);
+options = statset('UseParallel',true);
+[B0, FitInfo] = lassoglm(X,Y,'binomial','NumLambda',300,'CV', 10, 'link','logit','Alpha',0.15,'Options', options);
 indx = FitInfo.Index1SE;
 B1 = B0(:,indx);
 cnst = FitInfo.Intercept(indx);

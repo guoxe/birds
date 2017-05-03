@@ -123,18 +123,24 @@ montage2(H1);
 
 
 %% testing ROI
+clear;
+clc;
 load training_data_merged.mat;
 im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
 figure;
 h_im = imshow(im);
 
 h1 = imellipse;
+wait(h1);
 mask1 = createMask(h1,h_im);
 h2 = imellipse;
+wait(h2);
 mask2 = createMask(h2,h_im);
 h3 = imellipse;
+wait(h3)
 mask3 = createMask(h3,h_im);
 h4 = imellipse;
+wait(h4);
 mask4 = createMask(h4,h_im);
 
 new_im1 = bsxfun(@times, im, mask1);
@@ -179,11 +185,4 @@ outMag = imgaborfilt(im,g);
 outSize = size(outMag);
 outMag = reshape(outMag, [outSize(1:2), 1, outSize(3)]);
 figure, montage(outMag, 'DisplayRange', []);
-
-
-
-
-
-
-
 
