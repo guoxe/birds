@@ -2,3 +2,4 @@ videos/*
 *.m~
 tags
 *.mat
+FastPeakFind.m

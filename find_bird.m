@@ -2,22 +2,38 @@
 clc;
 clear;
 %load the image masks
-load mask1.mat;
-load mask2.mat;
-load mask3.mat;
-load mask4.mat;
+load mask1_2.mat;
+load mask2_2.mat;
+load mask3_2.mat;
+load mask4_2.mat;
+% load gabor1.mat;
+% load gabor2.mat;
+% load gabor3.mat;
+% load gabor4.mat;
+% load gabor.mat;
+% load grayscale.mat;
+% load grad.mat;
 %load mask_t.mat;
-load model_weights_20x20_8.mat;%load the model weights
-sz=19;
+load model_weights_30x30_6.mat;%load the model weights
+sz=29;
 
 imagefiles = dir('videos/frames/*.jpg');%generate a list of all the image files
 for i=1:1%loop through all the imagefiles
     im = rgbConvert(imread(strcat('videos/frames/',imagefiles(i).name)),'gray');
+    [grad_mag,O] = gradientMag(im,0,0,0,0); % gradmag filtering
+    % gabor filtering
+    orientation = [0 45 90 135];
+    g = gabor(2, orientation);
+    outMag = imgaborfilt(im,g);
+    gabor1 = outMag(:,:,1);
+    gabor2 = outMag(:,:,2);
+    gabor3 = outMag(:,:,3);
+    gabor4 = outMag(:,:,4);
     %mask out the cages
-    m1=generate_heatmap(B,im,mask1,sz);%heatmap for the first cage
-    m2=generate_heatmap(B,im,mask2,sz);%heatmap for the second cage
-    m3=generate_heatmap(B,im,mask3,sz);%heatmap for the third cage
-    m4=generate_heatmap(B,im,mask4,sz);%heatmap for the fourth cage
+    m1=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask1,sz);%heatmap for the first cage
+    m2=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask2,sz);%heatmap for the second cage
+    m3=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask3,sz);%heatmap for the third cage
+    m4=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask4,sz);%heatmap for the fourth cage
     %find the peaks, after doing a crude noise filter (remove values <
     %0.5)
     m1 = bsxfun(@times, m1, bsxfun(@ge, m1, 0.85));

@@ -1,4 +1,4 @@
-function [ hm ] = generate_heatmap(B,img,mask,sz)
+function [ hm ] = generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask,sz)
 %GENERATE_HEATMAP Generate a heatmap of classifier responses for the given
 %image mask
 %   Given an input image this function will return a heatmap of values
@@ -11,8 +11,8 @@ function [ hm ] = generate_heatmap(B,img,mask,sz)
         [i,j] = ind2sub(size(mask), idx(k));
         %I = imcrop(img,'single', [i-(sz+1) j-(sz+1) sz sz]);
         offset = (sz+1)/2;
-        patch = img(i-offset:i+offset-1,j-offset:j+offset-1);
-        x=extract_channels(patch,8,features);
+%         patch = img(i-offset:i+offset-1,j-offset:j+offset-1);
+        x=extract_channels(grad_mag,im,gabor1,gabor2,gabor3,gabor4,8,features, i, j, offset);
         hm(i,j) = glmval(B,x,'logit');
     end
 end
