@@ -7,7 +7,7 @@ function [ hm ] = generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mas
     features = (sz+1)^2;
     idx = find(mask ~= 0);
     hm = zeros(size(mask));
-    for k=1:length(idx)
+    for k=1:2:length(idx)
         [i,j] = ind2sub(size(mask), idx(k));
         %I = imcrop(img,'single', [i-(sz+1) j-(sz+1) sz sz]);
         offset = (sz+1)/2;
