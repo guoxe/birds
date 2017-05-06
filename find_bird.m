@@ -2,10 +2,10 @@
 clc;
 clear;
 %load the image masks
-load mask1_2.mat;
-load mask2_2.mat;
-load mask3_2.mat;
-load mask4_2.mat;
+load mask1.mat;
+load mask2.mat;
+load mask3.mat;
+load mask4.mat;
 % load gabor1.mat;
 % load gabor2.mat;
 % load gabor3.mat;
@@ -18,7 +18,7 @@ load model_weights_30x30_6.mat;%load the model weights
 sz=29;
 
 imagefiles = dir('videos/frames/*.jpg');%generate a list of all the image files
-for i=1:1%loop through all the imagefiles
+for i=1:5%loop through all the imagefiles
     im = rgbConvert(imread(strcat('videos/frames/',imagefiles(i).name)),'gray');
     [grad_mag,O] = gradientMag(im,0,0,0,0); % gradmag filtering
     % gabor filtering
