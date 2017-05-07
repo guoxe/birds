@@ -129,34 +129,36 @@ load training_data_merged.mat;
 im = rgbConvert(imread(strcat('videos/frames/',training_data(1).imfile)),'gray');
 figure;
 h_im = imshow(im);
+set(gca,'position',[0 0 1 1],'units','normalized')
 
 h1 = imellipse;
 wait(h1);
 mask1 = createMask(h1,h_im);
-h2 = imellipse;
-wait(h2);
-mask2 = createMask(h2,h_im);
-h3 = imellipse;
-wait(h3)
-mask3 = createMask(h3,h_im);
-h4 = imellipse;
-wait(h4);
-mask4 = createMask(h4,h_im);
+% h2 = imellipse;
+% wait(h2);
+% mask2 = createMask(h2,h_im);
+% h3 = imellipse;
+% wait(h3)
+% mask3 = createMask(h3,h_im);
+% h4 = imellipse;
+% wait(h4);
+% mask4 = createMask(h4,h_im);
 
 new_im1 = bsxfun(@times, im, mask1);
-new_im2 = bsxfun(@times, im, mask2);
-new_im3 = bsxfun(@times, im, mask3);
-new_im4 = bsxfun(@times, im, mask4);
+% new_im2 = bsxfun(@times, im, mask2);
+% new_im3 = bsxfun(@times, im, mask3);
+% new_im4 = bsxfun(@times, im, mask4);
 
 
 figure;
 imshow(new_im1);
-figure;
-imshow(new_im2);
-figure;
-imshow(new_im3);
-figure;
-imshow(new_im4);
+set(gca,'position',[0 0 1 1],'units','normalized')
+% figure;
+% imshow(new_im2);
+% figure;
+% imshow(new_im3);
+% figure;
+% imshow(new_im4);
 
 %% gabor testing
 clear;
@@ -180,4 +182,4 @@ outMag = imgaborfilt(patch,g);
 
 outSize = size(outMag);
 outMag = reshape(outMag, [outSize(1:2), 1, outSize(3)]);
-% figure, montage(outMag, 'DisplayRange', []);
+figure, montage(outMag, 'DisplayRange', []);

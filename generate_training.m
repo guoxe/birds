@@ -1,11 +1,11 @@
 clc;
 clear;
-imagefiles = dir('videos/frames/*.jpg');
-fig = figure();
+imagefiles = dir('videos/frames_rgb/rgb_frames/*.jpg');
+fig = figure()
 data_idx = 1;
-for i=1:length(imagefiles)
+for i=1:length(imagefiles)                  
     currentfile = imagefiles(i).name;
-    imagesc(imread(strcat('videos/frames/',currentfile)));
+    imagesc(imread(strcat('videos/frames_rgb/rgb_frames/',currentfile)));
     keydown = waitforbuttonpress();
     if (keydown ~= 0) %skip the image
         k = get(fig, 'CurrentCharacter');
