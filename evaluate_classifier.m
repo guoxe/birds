@@ -1,12 +1,12 @@
 clc;
 clear;
-load model_weights_30x30_6.mat;%load the model weights
+load model_weights_31x31_8.mat;%load the model weights
 load mask1.mat;
 load mask2.mat;
 load mask3.mat;
 load mask4.mat;
 load test_data_eval.mat;
-sz = 29;
+sz = 31;
 errors = zeros(4,length(training_data(:)));
 
 for i=1:length(training_data(:));
@@ -22,14 +22,3 @@ for i=1:length(training_data(:));
     errors(:,i) = err;
 end
 fprintf('The average error is: %fpx\n', mean(errors(:)));
-
-%% print images that were misclassified
-for i=1:length(predictions(:))
-    yhat = predictions(i).y;
-    if (abs(yhat - Y(i)) >= 0.3)
-        continue;
-    end
-    imshow(predictions(i).image);
-    title(sprintf('Expected: %d Actual: %d', Y(i), yhat));
-    waitforbuttonpress();
-end

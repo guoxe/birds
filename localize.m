@@ -1,19 +1,20 @@
 function [ x,y ] = localize(im, mask1, mask2, mask3, mask4, B,sz)
 %LOCALIZE Return the locations of the 4 birds in the image im
-    [grad_mag,~] = gradientMag(im,0,0,0,0); % gradmag filtering
+    %[grad_mag,~] = gradientMag(im,0,0,0,0); % gradmag filtering
     % gabor filtering
-    orientation = [0 45 90 135];
-    g = gabor(2, orientation);
-    outMag = imgaborfilt(im,g);
-    gabor1 = outMag(:,:,1);
-    gabor2 = outMag(:,:,2);
-    gabor3 = outMag(:,:,3);
-    gabor4 = outMag(:,:,4);
+    %orientation = [0 45 90 135];
+    %g = gabor(2, orientation);
+    %outMag = imgaborfilt(im,g);
+    %gabor1 = outMag(:,:,1);
+    %gabor2 = outMag(:,:,2);
+    %gabor3 = outMag(:,:,3);
+    %gabor4 = outMag(:,:,4);
+    img_channels = extract_channels(im);
     %generate a probability map for each of the 4 cages
-    m1=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask1,sz);%heatmap for the first cage
-    m2=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask2,sz);%heatmap for the second cage
-    m3=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask3,sz);%heatmap for the third cage
-    m4=generate_heatmap(B,im,grad_mag,gabor1,gabor2,gabor3,gabor4,mask4,sz);%heatmap for the fourth cage
+    m1=generate_heatmap(B,img_channels,mask1,sz);%heatmap for the first cage
+    m2=generate_heatmap(B,img_channels,mask2,sz);%heatmap for the second cage
+    m3=generate_heatmap(B,img_channels,mask3,sz);%heatmap for the third cage
+    m4=generate_heatmap(B,img_channels,mask4,sz);%heatmap for the fourth cage
     %find the peaks
     [~,Im1] = max(m1(:));
     [y1, x1] = ind2sub(size(m1), Im1);
