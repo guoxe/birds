@@ -53,12 +53,14 @@ for i=1:5%loop through all the imagefiles
     [Cm4, Im4] = max(m4(:));
     [I1m4, I2m4] = ind2sub(size(m4), Im4);
     
+    figure;
     imshow(im);
     hold on;
     plot(I2m1,I1m1,'r+');
     plot(I2m2,I1m2,'r+');
     plot(I2m3,I1m3,'r+');
     plot(I2m4,I1m4,'r+');
+%     plot(p1(1:2:end),p1(2:2:end),'r+');
 %     plot(p2(1:2:end),p2(2:2:end),'r+');
 %     plot(p3(1:2:end),p3(2:2:end),'r+');
 %     plot(p4(1:2:end),p4(2:2:end),'r+');
