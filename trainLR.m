@@ -2,9 +2,9 @@
 clear;
 clc;
 load('training_data_merged.mat');
-size = 31;
+size = 27;
 feature_size = size^2;
-channels = 8;
+channels = 6;
 
 X = zeros(16*length(training_data(:)), feature_size*channels);
 labels = zeros(16,1);
@@ -43,4 +43,4 @@ indx = FitInfo.Index1SE;
 B1 = B0(:,indx);
 cnst = FitInfo.Intercept(indx);
 B = [cnst;B1];
-save('model_weights_31x31_8.mat', 'B');
+save('model_weights_27x27_6.mat', 'B');

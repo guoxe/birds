@@ -183,3 +183,16 @@ outMag = imgaborfilt(patch,g);
 outSize = size(outMag);
 outMag = reshape(outMag, [outSize(1:2), 1, outSize(3)]);
 figure, montage(outMag, 'DisplayRange', []);
+
+%% image sequencing
+clc;
+clear;
+fps = 8;
+imagefiles = dir('videos/demo/*.jpg');%generate a list of all the image files
+I = zeros(778, 1125, length(imagefiles));
+for i=1:length(imagefiles);
+    filename = sprintf('videos/demo/image%d.jpg', i);
+    im = rgbConvert(imread(filename),'gray');
+    I(:,:,i) = im;
+end;
+implay(I, fps);

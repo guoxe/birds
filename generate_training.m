@@ -1,11 +1,11 @@
 clc;
 clear;
-imagefiles = dir('videos/frames_rgb/rgb_frames/*.jpg');
+imagefiles = dir('videos/frames_demo/*.jpg');
 fig = figure()
 data_idx = 1;
 for i=1:length(imagefiles)                  
-    currentfile = imagefiles(i).name;
-    imagesc(imread(strcat('videos/frames_rgb/rgb_frames/',currentfile)));
+    currentfile = imagefiles(8).name;
+    imagesc(imread(strcat('videos/frames_demo/',currentfile)));
     keydown = waitforbuttonpress();
     if (keydown ~= 0) %skip the image
         k = get(fig, 'CurrentCharacter');
@@ -35,5 +35,5 @@ for i=1:length(imagefiles)
         disp(data_idx);
     end
 end
-save('training_data.mat', 'training_data');
+save('test_data_set2.mat', 'training_data');
 close(fig);
