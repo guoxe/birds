@@ -3,3 +3,4 @@ videos/*
 tags
 *.mat
 FastPeakFind.m
+*.png

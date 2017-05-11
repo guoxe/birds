@@ -4,16 +4,18 @@ function [ hm ] = generate_heatmap(B,img_channels,mask,sz)
 %   Given an input image this function will return a heatmap of values
 %   between [0,1] corresponding to the classifier responses for each pixel
 %   of the input image.
-    %features = (sz+1)^2;
     idx = find(mask ~= 0);
     hm = zeros(size(mask));
-    for k=1:25:length(idx)
+    step = 32;
+    for k=1:step:length(idx)
         [i,j] = ind2sub(size(mask), idx(k));
-        %I = imcrop(img,'single', [i-(sz+1) j-(sz+1) sz sz]);
-        %goffset = (sz+1)/2;
-%         patch = img(i-offset:i+offset-1,j-offset:j+offset-1);
         x=extract_patch(img_channels,i,j,sz);
         hm(i,j) = glmval(B,x,'logit');
+        if hm(i,j) >= 0.4
+            step = ceil(step / 8);
+        else
+            step = 32;
+        end
     end
 end
 

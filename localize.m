@@ -1,14 +1,5 @@
 function [ x,y ] = localize(im, mask1, mask2, mask3, mask4, B,sz)
 %LOCALIZE Return the locations of the 4 birds in the image im
-    %[grad_mag,~] = gradientMag(im,0,0,0,0); % gradmag filtering
-    % gabor filtering
-    %orientation = [0 45 90 135];
-    %g = gabor(2, orientation);
-    %outMag = imgaborfilt(im,g);
-    %gabor1 = outMag(:,:,1);
-    %gabor2 = outMag(:,:,2);
-    %gabor3 = outMag(:,:,3);
-    %gabor4 = outMag(:,:,4);
     img_channels = extract_channels(im);
     %generate a probability map for each of the 4 cages
     m1=generate_heatmap(B,img_channels,mask1,sz);%heatmap for the first cage
