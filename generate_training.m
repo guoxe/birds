@@ -4,7 +4,7 @@ imagefiles = dir('videos/frames_demo/*.jpg');
 fig = figure()
 data_idx = 1;
 for i=1:length(imagefiles)                  
-    currentfile = imagefiles(8).name;
+    currentfile = imagefiles(i).name;
     imagesc(imread(strcat('videos/frames_demo/',currentfile)));
     keydown = waitforbuttonpress();
     if (keydown ~= 0) %skip the image

@@ -7,23 +7,36 @@ load mask3_2.mat;
 load mask4_2.mat;
 load test_data_set.mat;
 sz = 31;
-plotIm = true;
+% xOld = [];
+% yOld = [];
+x = zeros(1,4);
+y = zeros(1,4);
+plotIm = false;
+plotGraph = false;
+plotEKG = true;
 errors = zeros(4,length(training_data(:)));
-pointsX = [];
-pointsY = [];
+traveled = zeros(4, length(training_data(:)));
 imagefiles = dir('videos/frames_demo/*.jpg');%generate a list of all the image files
 for i=1:length(imagefiles);
+    xOld = x;
+    yOld = y;
+    disp(i);
     im = rgbConvert(imread(strcat('videos/frames_demo/',imagefiles(i).name)),'gray');
     pos_x = training_data(i).positive(:,1);
     pos_y = training_data(i).positive(:,2);
     [x,y] = localize(im,mask1,mask2,mask3,mask4,B,sz);
     err = zeros(1,4);
+    trav = zeros(1,4);
     for j=1:4;
-        dist = abs([pos_x(j) pos_y(j)] - [x(j) y(j)])
+        travelDist = abs([x(j) y(j)] - [xOld(j) yOld(j)]);
+        dist = abs([pos_x(j) pos_y(j)] - [x(j) y(j)]);
         err(j) = norm(dist);
+        trav(j) = norm(travelDist);
     end
+    travel(:,i) = trav;
     errors(:,i) = err;
-    % Plot image with ground truth and classifier result.
+    % Plot image with ground truth and classifier result if plotIm is set
+    % to true.
     if (plotIm)
         fig = figure;
         imshow(im);
@@ -39,3 +52,45 @@ for i=1:length(imagefiles);
     end;
 end;
 fprintf('The average error is: %fpx\n', mean(errors(:)));
+if (plotGraph)
+    xp = 1:80;
+    figure;
+    plot(xp,errors(1,:), 'b');
+    hold on;
+    plot(xp,errors(2,:), 'r');
+    plot(xp,errors(3,:), 'g');
+    plot(xp,errors(4,:), 'y');
+    title('Graph of errors');
+    xlabel('Image');
+    ylabel('Error');
+    legend('cage 1', 'cage 2', 'cage 3', 'cage 4');
+end;
+if (plotEKG)
+    xp = 1:79;
+    figure;
+    subplot(2,2,1);
+    plot(xp, travel(1,2:80), 'r');
+    xlabel('Image');
+    ylabel('Distance(px)');
+    axis([0 80 0 80]);
+    title('Cage 1');
+    subplot(2,2,2);
+    plot(xp, travel(2,2:80), 'r');
+    xlabel('Image');
+    ylabel('Distance(px)');
+    axis([0 80 0 80]);
+    title('Cage 2');
+    subplot(2,2,3);
+    plot(xp, travel(3,2:80), 'r');
+    xlabel('Image');
+    ylabel('Distance(px)');
+    axis([0 80 0 80]);
+    title('Cage 3');
+    subplot(2,2,4);
+    plot(xp, travel(4,2:80), 'r');
+    xlabel('Image');
+    ylabel('Distance(px)');
+    axis([0 80 0 80]);
+    title('Cage 4');
+end;
+
