@@ -1,21 +1,19 @@
 clc;
 clear;
-load model_weights_31x31_6.mat;%load the model weights
+load model_weights_27x27_6.mat;%load the model weights
 load mask1_2.mat;
 load mask2_2.mat;
 load mask3_2.mat;
 load mask4_2.mat;
 load test_data_set.mat;
 sz = 31;
-% xOld = [];
-% yOld = [];
 x = zeros(1,4);
 y = zeros(1,4);
 plotIm = false;
 plotGraph = false;
 plotEKG = true;
 errors = zeros(4,length(training_data(:)));
-traveled = zeros(4, length(training_data(:)));
+travel = zeros(4,length(training_data(:)));
 imagefiles = dir('videos/frames_demo/*.jpg');%generate a list of all the image files
 for i=1:length(imagefiles);
     xOld = x;
@@ -53,7 +51,7 @@ for i=1:length(imagefiles);
 end;
 fprintf('The average error is: %fpx\n', mean(errors(:)));
 if (plotGraph)
-    xp = 1:80;
+    xp = 1:length(imagefiles);
     figure;
     plot(xp,errors(1,:), 'b');
     hold on;
@@ -66,28 +64,28 @@ if (plotGraph)
     legend('cage 1', 'cage 2', 'cage 3', 'cage 4');
 end;
 if (plotEKG)
-    xp = 1:79;
+    xp = 1:length(imagefiles)-1;
     figure;
     subplot(2,2,1);
-    plot(xp, travel(1,2:80), 'r');
+    plot(xp, travel(1,2:length(imagefiles)-1), 'r');
     xlabel('Image');
     ylabel('Distance(px)');
     axis([0 80 0 80]);
     title('Cage 1');
     subplot(2,2,2);
-    plot(xp, travel(2,2:80), 'r');
+    plot(xp, travel(2,2:length(imagefiles)-1), 'r');
     xlabel('Image');
     ylabel('Distance(px)');
     axis([0 80 0 80]);
     title('Cage 2');
     subplot(2,2,3);
-    plot(xp, travel(3,2:80), 'r');
+    plot(xp, travel(3,2:length(imagefiles)-1), 'r');
     xlabel('Image');
     ylabel('Distance(px)');
     axis([0 80 0 80]);
     title('Cage 3');
     subplot(2,2,4);
-    plot(xp, travel(4,2:80), 'r');
+    plot(xp, travel(4,2:length(imagefiles)-1), 'r');
     xlabel('Image');
     ylabel('Distance(px)');
     axis([0 80 0 80]);

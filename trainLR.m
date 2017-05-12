@@ -1,4 +1,4 @@
-%% Load training set and use it to train SVM
+%% Load training set and use it to train LR
 clear;
 clc;
 load('training_data_merged.mat');
@@ -21,14 +21,10 @@ for i=1:length(training_data(:));
     neg_x = round(training_data(i).negative(:,1));
     neg_y = round(training_data(i).negative(:,2));
     for j=1:4;
-        %patch = im(pos_y(j)-offset:pos_y(j)+offset-1,pos_x(j)-offset:pos_x(j)+offset-1);
-        %x=extract_channels(patch,channels,feature_size);
         patch = extract_patch(img_channels,pos_y(j),pos_x(j),size);
         pos_boxes(j,:) = patch;
     end;
     for j=1:12;
-        %patch = im(neg_y(j)-offset:neg_y(j)+offset-1,neg_x(j)-offset:neg_x(j)+offset-1);
-        %x=extract_channels(patch,channels,feature_size);
         patch = extract_patch(img_channels,neg_y(j),neg_x(j),size);
         neg_boxes(j,:) = patch; 
     end;
