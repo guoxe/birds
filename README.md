@@ -5,3 +5,5 @@ For videos recorded by a thermal camera the results were promising with regards 
 For videos recorded by a regular RGB web camera, the results were not as good;  accuracy was poor and the runtime per frame was high. Usually the classifier would locate objects of similar colour of the bird but with different shape.
 
 Larger activity spikes are detected by the system, such as flight. However, activity in place, such as the bird moving its head is not accurately detected.
+
+![](https://github.com/guoxe/birds/blob/master/activityGif.gif)
